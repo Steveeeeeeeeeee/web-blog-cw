@@ -21,6 +21,8 @@ class UserTableSeeder extends Seeder
         $a -> email = 'john.doe@example.com';
         $a -> password = bcrypt('password');
         $a -> save();
+
+        User::factory()->count(10)->create();    
     
     }
 }
