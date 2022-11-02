@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +23,12 @@ Route::get('/dashboard', function () {
 
 //posts route
 Route::get('/posts', function(){
-    return view('posts');
+    return view('blog/posts');
 })->middleware(['auth', 'verified'])->name('posts');
+
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+Route::get('/posts/store', [PostController::class, 'store'])->name('posts.store');
 
 require __DIR__.'/auth.php';
 
