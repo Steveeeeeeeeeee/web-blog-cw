@@ -15,10 +15,10 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        // create a user
+        // create a user that is an admin
         $a = new User();
-        $a -> name = 'John Doe';    
-        $a -> email = 'john.doe@example.com';
+        $a -> name = 'admin';    
+        $a -> email = 'admin@example.com';
         $a -> password = bcrypt('password');
         $a -> save();
 
