@@ -30,7 +30,13 @@ class PostController extends Controller
         $posts = Posts::all();
         return view('blog/posts', compact('posts'));
     }
-    
+
+    // show a post with id $id
+    public function showId($id)
+    {
+        $post = Posts::find($id);
+        return view('blog/postID', compact('post'));
+    }
 
   
 }

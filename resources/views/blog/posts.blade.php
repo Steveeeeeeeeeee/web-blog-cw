@@ -16,7 +16,8 @@
                     @foreach($posts as $post) 
                         <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                             <div class="mt-8 text-2xl">
-                                <a href="{{ route('posts', $post->id) }}">
+                                <!-- href to go to post of the id -->
+                                <a href="{{ route('post', $post->id) }}">
                                     {{ $post->title }}
                                 </a>
                             </div>

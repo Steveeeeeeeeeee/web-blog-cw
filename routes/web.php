@@ -24,7 +24,8 @@ Route::get('/dashboard', function () {
 //posts route with the show function in the controller
 Route::get('/posts', [PostController::class, 'show'])->name('posts');       
 
-
+//get a post with an id
+Route::get('/posts/{id}', [PostController::class, 'showId'])->name('post');
 
 
 
