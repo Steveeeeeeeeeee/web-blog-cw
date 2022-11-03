@@ -21,6 +21,9 @@ class PostTableSeeder extends Seeder
         $p -> body = 'This is the first post';  
         $p -> user_id = 1;
         $p -> save();
-        
+
+        // make a 10 posts
+        Posts::factory()->count(10)->create();
+
     }
 }
