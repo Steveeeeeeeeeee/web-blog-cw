@@ -19,6 +19,12 @@ public function posts()
     return $this->hasMany(Post::class)->nullable();
 }
 
+// create a one to many relationship between users and comments that is nullable
+public function comments()
+{
+    return $this->hasMany(Comment::class)->nullable();
+}   
+
 
     /**
      * The attributes that are mass assignable.

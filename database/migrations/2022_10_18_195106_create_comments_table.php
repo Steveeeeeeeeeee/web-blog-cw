@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+        //create the comments table
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
-            $table->integer('parent_id')->unsigned();
-            $table->text('body');
-            $table->integer('commentable_id')->unsigned();
-            $table->string('commentable_type');
+            $table -> text('body');
+            // foreign key to users table
+            $table -> foreignId('user_id') -> references('id') -> on('users')->onDelete('cascade')->onUpdate('cascade');     
+            // foreign key to posts table
+            $table -> foreignId('post_id') -> references('id') -> on('posts')->onDelete('cascade')->onUpdate('cascade');     
+            // foreign key to comment parent
+            $table -> foreignId('parent_id') -> references('id') -> on('comments')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
