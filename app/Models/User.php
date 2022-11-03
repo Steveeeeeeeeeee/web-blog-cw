@@ -12,6 +12,14 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+public function posts()
+
+// create a one to many relationship between users and posts that is nullable
+{
+    return $this->hasMany(Post::class)->nullable();
+}
+
+
     /**
      * The attributes that are mass assignable.
      *

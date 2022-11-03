@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table -> string('title');
             $table -> text('body');
-            // creator
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            // foreign key to users table
+            $table -> foreignId('user_id') -> references('id') -> on('users')->onDelete('cascade')->onUpdate('cascade');     
+            
             //comments 
             $table->timestamps();
             
