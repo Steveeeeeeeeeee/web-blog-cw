@@ -22,7 +22,6 @@ return new class extends Migration
             // foreign key to posts table
             $table -> foreignId('post_id') -> references('id') -> on('posts')->onDelete('cascade')->onUpdate('cascade');     
             // foreign key to comment parent
-            $table -> foreignId('parent_id') -> references('id') -> on('comments')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
