@@ -21,10 +21,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//posts route
-Route::get('/posts', function(){
-    return view('blog/posts');
-})->middleware(['auth', 'verified'])->name('posts');
+//posts route with the show function in the controller
+Route::get('/posts', [PostController::class, 'show'])->name('posts');       
+
+
+
+
 
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 

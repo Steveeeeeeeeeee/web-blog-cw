@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Posts;
+
 
 class PostController extends Controller
 {
@@ -21,4 +23,14 @@ class PostController extends Controller
     {
         // store code
     }
+
+    // show all posts with variable $posts
+    public function show()
+    {
+        $posts = Posts::all();
+        return view('blog/posts', compact('posts'));
+    }
+    
+
+  
 }
