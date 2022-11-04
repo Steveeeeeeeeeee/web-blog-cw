@@ -20,7 +20,7 @@ return new class extends Migration
             // foreign key to users table
             $table -> foreignId('user_id') -> references('id') -> on('users')->onDelete('cascade')->onUpdate('cascade');     
             // foreign key to posts table
-            $table -> foreignId('post_id') -> references('id') -> on('posts')->onDelete('cascade')->onUpdate('cascade');     
+            $table -> foreignId('posts_id') -> references('id') -> on('posts')->onDelete('cascade')->onUpdate('cascade');     
             // foreign key to comment parent
             $table -> foreignId('parent_id')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->timestamps();

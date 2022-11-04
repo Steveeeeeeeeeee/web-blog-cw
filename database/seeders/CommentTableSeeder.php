@@ -21,7 +21,7 @@ class CommentTableSeeder extends Seeder
         $c = new Comment();
         $c -> body = 'This is the first comment';
         $c -> user_id = 1;
-        $c -> post_id = 1;
+        $c -> posts_id = 1;
         $c -> parent_id = null;
         $c -> save();
 
