@@ -29,31 +29,30 @@
                         <div class="mt-6 text-gray-500">
                             <!-- add an edit & delete button if the comment is the users -->
                             @foreach($post->comments as $comment)
+                            <!-- tailwind class that overrides layouts -->
+                            <div class="bg-red-500">
                                 <div class="mt-6 text-gray-500">
-                                    <div class="mt-6 text-gray-500">
-                                        {{ $comment->body }}
+                                    <div class="mt-6 text-xl text-gray-500">
+                                        {{ $comment->user->name }}
                                     </div>
                                     <div class="mt-6 text-gray-500">
-                                        {{ $comment->user->name }}
+                                        {{ $comment->body }}
                                     </div>
                                     @if($comment->user_id == Auth::user()->id)
                                         <div class="mt-6 text-gray-500">
                                             <!-- edit button opens a text box -->
                                             <a href="{{ route('comment.edit', $comment->id) }}">Edit</a>
-                                            
-
-
-                                        </div>
-                                        <div class="mt-6 text-gray-500">
                                             <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit">Delete</button>
                                             </form>
                                         </div>
+                
                                     @endif
                                 </div>
-                         >
+                            </div>  
+                         
                             @endforeach
                         </div>
                     
