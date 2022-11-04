@@ -21,20 +21,42 @@
                         </div>
                     </div>
                    
-                    <!-- show comments -->
+                    <!-- show comments and indent the comment from the user name-->
                     <div class="p-6 sm:px-20 bg-slate-600 border-b border-gray-200">
-                        <div class="emt-8 text-2xl">
-                            Comments : 
+                        <div class="mt-8 text-2xl">
+                            Comments
                         </div>
-                        @foreach($post->comments as $comment)
-                        <div class="text-lg ml-7 mt-8 text-blue-500">
-                            {{ $comment->user->name }}
-                            <div class="text-sm ml-7 mt-6 text-gray-500">
-                            {{ $comment->body }}
+                        <div class="mt-6 text-gray-500">
+                            <!-- add an edit & delete button if the comment is the users -->
+                            @foreach($post->comments as $comment)
+                                <div class="mt-6 text-gray-500">
+                                    <div class="mt-6 text-gray-500">
+                                        {{ $comment->body }}
+                                    </div>
+                                    <div class="mt-6 text-gray-500">
+                                        {{ $comment->user->name }}
+                                    </div>
+                                    @if($comment->user_id == Auth::user()->id)
+                                        <div class="mt-6 text-gray-500">
+                                            <!-- edit button opens a text box -->
+                                            <a href="{{ route('comment.edit', $comment->id) }}">Edit</a>
+                                            
+
+
+                                        </div>
+                                        <div class="mt-6 text-gray-500">
+                                            <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
+                         >
+                            @endforeach
                         </div>
-                        </div>
-                        
-                        @endforeach
+                    
                     </div>
                      <!-- add comment form -->
                      <div class="p-6 sm:px-20 bg-white border-b border-gray-200">

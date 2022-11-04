@@ -36,5 +36,16 @@ Route::get('/posts/store', [PostController::class, 'store'])->name('posts.store'
 
 Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
 
+
+//edit a comment
+Route::get('/comment/edit/{id}', [CommentController::class, 'edit'])->name('comment.edit');
+
+//update the comment
+Route::put('/comment/update/{id}', [CommentController::class, 'update'])->name('comment.update');
+
+
+//destroy a comment
+Route::delete('/comment/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
+
 require __DIR__.'/auth.php';
 
