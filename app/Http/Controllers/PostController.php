@@ -37,6 +37,4 @@ class PostController extends Controller
         $post = Posts::find($id);
         return view('blog/postID', compact('post'));
     }
-
-  
 }

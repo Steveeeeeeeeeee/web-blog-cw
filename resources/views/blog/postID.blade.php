@@ -20,6 +20,34 @@
                             {{ $post->user->name }}
                         </div>
                     </div>
+                    <!-- add comment form -->
+                    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                        <div class="mt-8 text-2xl">
+                            Add Comment
+                        </div>
+                        <div class="mt-6 text-gray-500">
+                            <form method="POST" action="{{ route('comment.store') }}">
+                                @csrf
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <textarea name="body" cols="30" rows="10"></textarea>
+                                <button type="submit">Add Comment</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- show comments -->
+                    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                        <div class="mt-8 text-2xl">
+                            Comments
+                        </div>
+                        @foreach($post->comments as $comment)
+                        <div class="mt-6 text-gray-500">
+                            {{ $comment->body }}
+                        </div>
+                        <div class="mt-6 text-gray-500">
+                            {{ $comment->user->name }}
+                        </div>
+                        @endforeach
+                    </div>
                 
                 
                 </div>

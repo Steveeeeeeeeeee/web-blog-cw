@@ -33,5 +33,7 @@ Route::get('/posts/create', [PostController::class, 'create'])->name('posts.crea
 
 Route::get('/posts/store', [PostController::class, 'store'])->name('posts.store');
 
+Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
+
 require __DIR__.'/auth.php';
 
