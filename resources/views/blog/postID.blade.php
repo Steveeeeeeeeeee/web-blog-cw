@@ -19,10 +19,14 @@
             <!-- post title -->
             <div class="bg-gray-800 w-full p-4 border-black rounded-lg">
                 <div class="text-3xl font-bold text-white">
-                    {{ $post->title }}
+                    Title: {{ $post->title }}
                 </div>
                 <div class="text-sm font-bold text-yellow-500">
-                    Posted by {{ $post->user->name }} on {{ $post->created_at->format('d/m/Y') }}
+                    Posted by 
+                    <a href="{{ route('profile', $post->user->id) }}" class = "hover:text-yellow-700">
+                    {{ $post->user->name }} 
+                    </a>
+                    on {{ $post->created_at->format('d/m/Y') }}
                 </div>
             </div>
             <!-- post body -->
@@ -38,10 +42,13 @@
                 </div>
                 @foreach($post->comments as $comment)
                 <div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">
-                    <div class="flex-1">
-                        <div class="text-lg font-bold text-gray-900">
-                            {{ $comment->user->name }}
-                        </div>
+                    <div class="flex-1 justify-start">
+                        <!-- make username clickable and go to profile -->
+                        <a href="{{ route('profile', $comment->user->id) }}" class="text-xl font-bold text-blue-400 hover:text-blue-600">
+                            
+                                {{ $comment->user->name }}
+                            
+                        </a>
                         <div class="text-gray-700">
                             {{ $comment->body }}
                         </div>
