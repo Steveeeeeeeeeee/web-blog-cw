@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;    
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,10 @@ Route::put('/comment/update/{id}', [CommentController::class, 'update'])->name('
 
 //destroy a comment
 Route::delete('/comment/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+// Route to users profile of Id
+Route::get('/profile/{id}', [UserController::class, 'profile'])->name('profile');
+
 
 require __DIR__.'/auth.php';
 

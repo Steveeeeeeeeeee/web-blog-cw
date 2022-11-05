@@ -26,6 +26,7 @@ public function comments()
 }   
 
 
+
     /**
      * The attributes that are mass assignable.
      *
