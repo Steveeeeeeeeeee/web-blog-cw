@@ -31,7 +31,7 @@ Route::get('/posts/{id}', [PostController::class, 'showId'])->name('post');
 
 
 
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/createpost', [PostController::class, 'create'])->name('posts.create');
 
 Route::get('/posts/store', [PostController::class, 'store'])->name('posts.store');
 
