@@ -1,36 +1,22 @@
 <!-- page to view all posts -->
 <!-- extends post controller -->
-       
 
-<x-app-layout>
-<x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Posts') }}
-        </h2>
-    </x-slot>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <!--return available posts -->
-                    @foreach($posts as $post) 
-                        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                            <div class="mt-8 text-2xl">
-                                <!-- href to go to post of the id -->
-                                <a href="{{ route('post', $post->id) }}">
-                                    {{ $post->title }}
-                                </a>
-                            </div>
-                            <div class="mt-6 text-gray-500">
-                                {{ $post->body }}
-                            </div>
-                        </div>
-                    
-                    @endforeach
-                
-                
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @vite('resources/css/app.css')
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+</head>
+
+<body class="bg-gray-200">
+    @include('layouts.navBar')  
+    @include('layouts.posts')
+   
+
+</body>
+
+</html>

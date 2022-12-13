@@ -23,7 +23,7 @@ class PostTableSeeder extends Seeder
         $p -> save();
 
         // make a 10 posts
-        Posts::factory()->count(10)->create();
+        Posts::factory()->count(50)->create();
 
     }
 }
