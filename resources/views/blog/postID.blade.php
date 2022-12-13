@@ -10,7 +10,7 @@
         <title>Posts</title>
         @vite('resources/css/app.css')
     </head>
-    
+<html>
 <body class="bg-slate-700 font-sans leading-normal tracking-normal">
     <!-- create a nice looking blog post with the post and the comments to the side -->
     <div class="flex flex-col md:flex-row justify-center bg-gray-700 h-fit">
@@ -60,11 +60,11 @@
                         @if($comment->user_id == Auth::user()->id)
                         <div class="flex flex-row-reverse space-x-3">
                             <!-- edit button edits on current webpage -->
-                            <a href="{{ route('comment.edit', $comment->id) }}">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">
+                           
+                                <button onclick="showCommentForm({{ $comment->id }})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">
                                     Edit
                                 </button>
-                            </a>
+                            
                             <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -98,10 +98,39 @@
                     </div>
             </form>
             </div>
+            <script>
+  function showCommentForm(commentId) {
+    console.log('showCommentForm called with commentId:', commentId);
+    // create the form
+    var form = document.createElement('form');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('action', '{{ route('comment.update', $comment->id) }}');
 
+    // create the textarea element for the comment body
+    var textarea = document.createElement('textarea');
+    textarea.setAttribute('name', 'body');
+    textarea.innerHTML = "{{ $comment->body }}"; // populate with existing comment data
+
+    // create the submit button
+    var submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.innerHTML = 'Save';
+
+    // add the elements to the form
+    form.appendChild(textarea);
+    form.appendChild(submitButton);
+
+    // insert the form into the comment div
+    var commentElement = document.getElementById({{ $comment->id }});
+console.log('Found comment element:', commentElement);
+commentElement.appendChild(form);
+
+      }
+</script>
 </body>
+
 </x-app-layout>
-  
+</html>
 
         
 
