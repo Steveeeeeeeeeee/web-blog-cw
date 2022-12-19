@@ -12,15 +12,25 @@ class CommentController extends Controller
     {
         // store code
         $comment = new Comment();   
-        $comment->body = $request->body;    
+        $comment->body = $request->input('body');    
         //get the user id
         $comment->user_id = auth()->user()->id; 
         //get the post id
-        $comment->posts_id = $request->post_id;
+        $comment->posts_id = $request->input('post_id');
         $comment->parent_id = $request->parent_id;
         $comment->save();   
 
-        return redirect()->back();
+        return response()->json([
+            'comment' => [
+                'id' => $comment->id,
+                'body' => $comment->body,
+                'created_at' => $comment->created_at,
+                'user' => [
+                    'id' => $comment->user->id,
+                    'name' => $comment->user->name
+                ]
+            ]
+        ]);
 
          
     }

@@ -8,6 +8,7 @@
    
     <head>
         <title>Posts</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         @vite('resources/css/app.css')
     </head>
 <html>
@@ -36,14 +37,16 @@
                 </div>
             </div>
             <!-- post comments -->
-            <div class="bg-gray-600 w-full p-4 rounded-lg">
+            <div id="comments" class="bg-gray-600 w-full p-4 rounded-lg">
                 <div class="text-2xl font-bold text-gray-800 border-black rounded-lg">
                     Comments: {{ $post->comments->count() }}
                 </div>
                 <!-- if no comments dont do anything -->
                 @if($post->comments->count() > 0)
     @foreach($post->comments as $comment)
-        <div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">
+            
+    
+    <div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">
             <div class="flex-1 justify-start">
                 <!-- make username clickable and go to profile -->
                 <a href="{{ route('profile', $comment->user->id) }}" class="text-xl font-bold text-blue-400 hover:text-blue-600">
@@ -89,7 +92,7 @@
                 <div class="text-2xl ml-4 font-bold text-gray-800">
                     Add Comment
                 </div>
-                <form action="{{ route('comment.store') }}" method="POST">
+                <form id="comment-form">
                     @csrf
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <div class="flex flex-col md:flex-row justify-center">
@@ -134,6 +137,52 @@
     deleteButton.remove();  
     @endif
   }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#comment-form').on('submit', function(e) {
+            e.preventDefault();
+            // use ajax to submit the form and update the page without refreshing
+            $.ajax({
+                url: "{{ route('comment.store') }}",
+                method: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    console.log(response);
+                    var comment = response.comment; 
+                    // add the new comment to the page
+                    $('#comment-form').trigger('reset');
+                  $('#comments').append('<div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">' +
+                            '<div class="flex-1 justify-start">' +
+                            // get the user name from the comment object
+
+
+                                '<a href="' + comment.user.name + '" class="text-xl font-bold text-blue-400 hover:text-blue-600">' + comment.user.name + '</a>' +
+                                '<div class="text-gray-700" data-attr-comment-id="' + comment.id + '">' + comment.body + '</div>' +
+                            '</div>' +
+                            '<div class="flex-1 text-right ">' +
+                                '<div class="text-sm font-bold text-gray-600">' + comment.created_at + '</div>' +
+                                '@if($comment->user_id == Auth::user()->id)' +
+                                '<div class="flex flex-row-reverse space-x-3">' +
+                                    '<button data-attr-comment-edit="' + comment.id + '" onclick="showCommentForm(' + comment.id + ')" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">' +
+                                        'Edit' +
+                                    '</button>' +'<form action="/comment/' + comment.id + '/delete" method="POST">' +
+    '@csrf' +
+    '@method('DELETE')' +
+    '<button data-attr-comment-delete="' + comment.id + '"  type="submit" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded">' +
+        'Delete' +
+    '</button>' +
+'</form>' +
+'</div>' +
+'@endif' +
+'</div>' +
+'</div>'
+                
+                  )
+                }   
+            })
+        });
+    });
 </script>
 </body>
 
