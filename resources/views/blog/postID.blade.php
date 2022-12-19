@@ -40,43 +40,49 @@
                 <div class="text-2xl font-bold text-gray-800 border-black rounded-lg">
                     Comments: {{ $post->comments->count() }}
                 </div>
-                @foreach($post->comments as $comment)
-                <div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">
-                    <div class="flex-1 justify-start">
-                        <!-- make username clickable and go to profile -->
-                        <a href="{{ route('profile', $comment->user->id) }}" class="text-xl font-bold text-blue-400 hover:text-blue-600">
-                            
-                                {{ $comment->user->name }}
-                            
-                        </a>
-                        <div class="text-gray-700">
-                            {{ $comment->body }}
-                        </div>
-                    </div>
-                    <div class="flex-1 text-right ">
-                        <div class="text-sm font-bold text-gray-600">
-                            {{ $comment->created_at->diffForHumans() }}
-                        </div>
-                        @if($comment->user_id == Auth::user()->id)
-                        <div class="flex flex-row-reverse space-x-3">
-                            <!-- edit button edits on current webpage -->
-                           
-                                <button onclick="showCommentForm({{ $comment->id }})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">
-                                    Edit
-                                </button>
-                            
-                            <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                        @endif
-                    </div>
+                <!-- if no comments dont do anything -->
+                @if($post->comments->count() > 0)
+    @foreach($post->comments as $comment)
+        <div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">
+            <div class="flex-1 justify-start">
+                <!-- make username clickable and go to profile -->
+                <a href="{{ route('profile', $comment->user->id) }}" class="text-xl font-bold text-blue-400 hover:text-blue-600">
+                    {{ $comment->user->name }}
+                </a>
+                <div class="text-gray-700" data-attr-comment-id="{{$comment->id}}">
+                    {{ $comment->body }}
                 </div>
-                @endforeach
+            </div>
+            <div class="flex-1 text-right ">
+                <div class="text-sm font-bold text-gray-600">
+                    {{ $comment->created_at->diffForHumans() }}
+                </div>
+                @if($comment->user_id == Auth::user()->id)
+                <div class="flex flex-row-reverse space-x-3">
+                    <!-- edit button edits on current webpage -->
+                    <button data-attr-comment-edit="{{$comment->id}}" onclick="showCommentForm({{ $comment->id }})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">
+                        Edit
+                    </button>
+                    <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button data-attr-comment-delete="{{$comment->id}}"  type="submit" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+                @endif
+            </div>
+        </div>
+    @endforeach
+@else
+    <!-- display a message if there are no comments -->
+    <div class="bg-gray-600 w-full p-4 rounded-lg">
+        <div class="text-2xl font-bold text-gray-800 border-black rounded-lg">
+            No comments yet
+        </div>
+    </div>
+@endif
             </div>
             <!-- add comment form -->
             <div class="bg-white w-5/6 p-4 rounded-lg mt-2 justify-center">
@@ -99,42 +105,37 @@
             </form>
             </div>
             <script>
+                
   function showCommentForm(commentId) {
+    @if($post->comments->count() == 0)
+    console.log('no comments');
+    @else
     console.log('showCommentForm called with commentId:', commentId);
-    // create the form
-    var form = document.createElement('form');
-    form.setAttribute('method', 'POST');
-    form.setAttribute('action', '{{ route('comment.update', $comment->id) }}');
-
-    // create the textarea element for the comment body
-    var textarea = document.createElement('textarea');
-    textarea.setAttribute('name', 'body');
-    textarea.innerHTML = "{{ $comment->body }}"; // populate with existing comment data
-
-    // create the submit button
-    var submitButton = document.createElement('button');
-    submitButton.setAttribute('type', 'submit');
-    submitButton.innerHTML = 'Save';
-
-    // add the elements to the form
-    form.appendChild(textarea);
-    form.appendChild(submitButton);
-
-    // insert the form into the comment div
-    var commentElement = document.getElementById({{ $comment->id }});
-console.log('Found comment element:', commentElement);
-commentElement.appendChild(form);
-
-      }
+    //open a form to edit the comment
+    const commentElement = document.querySelector(`[data-attr-comment-id="${commentId}"]`)
+    console.log('commentElement:', commentElement);
+    commentElement.innerHTML = ` <form method="POST" action="{{ route('comment.update', $comment->id) }}" class="bg-gray-600 w-full p-4 rounded-lg">
+    @csrf
+    @method('PUT')
+    <div class="flex flex-col md:flex-row bg-white border-2 border-slate-900 rounded-lg p-4 my-2">
+        <div class="flex-1 justify-start">
+            <textarea name="body" class="form-input w-full py-2 px-3 rounded-md text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" id="body">{{ $comment->body }}</textarea>
+        </div>
+        <div class="flex-1 text-right ">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                Save
+            </button>
+        </div>
+    </div>
+</form>`
+    const editButton = document.querySelector(`[data-attr-comment-edit="${commentId}"]`)
+    editButton.remove();
+    const deleteButton = document.querySelector(`[data-attr-comment-delete="${commentId}"]`)
+    deleteButton.remove();  
+    @endif
+  }
 </script>
 </body>
 
 </x-app-layout>
 </html>
-
-        
-
-
-
-        <!-- create a column for the posts -->
-    
