@@ -16,6 +16,9 @@
                     <a class="">{{$post->created_at}}</a>
                 </div>
             </div>
+            
         @endforeach
-
+        <div class="fixed bottom-1/3 left-0 right-0 flex justify-center">
+            {{ $posts->links() }}
+</div>
     </div>
