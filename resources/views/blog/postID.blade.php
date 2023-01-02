@@ -161,8 +161,10 @@
                                 '<div class="text-gray-700" data-attr-comment-id="' + comment.id + '">' + comment.body + '</div>' +
                             '</div>' +
                             '<div class="flex-1 text-right ">' +
-                                '<div class="text-sm font-bold text-gray-600">' + comment.created_at + '</div>' +
-                                '@if($comment->user_id == Auth::user()->id)' +
+                                '<div class="text-sm font-bold text-gray-600">' + comment.created_at.toString().substring(0, comment.created_at.toString().indexOf('.')) + '</div>' +
+                                // check if the user is the owner of the comment    
+                                '@if(Auth::user()->id == $comment->user_id)' +
+                                  
                                 '<div class="flex flex-row-reverse space-x-3">' +
                                     '<button data-attr-comment-edit="' + comment.id + '" onclick="showCommentForm(' + comment.id + ')" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">' +
                                         'Edit' +
@@ -177,6 +179,7 @@
 '@endif' +
 '</div>' +
 '</div>'
+
                 
                   )
                 }   
