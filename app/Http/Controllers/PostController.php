@@ -27,8 +27,10 @@ class PostController extends Controller
     // show all posts with variable $posts
     public function show()
     {
-        $posts = Posts::all();
+        // paginate the posts   
+        $posts = Posts::SimplePaginate(5);    
         return view('blog/posts', compact('posts'));
+     
     }
 
     // show a post with id $id
