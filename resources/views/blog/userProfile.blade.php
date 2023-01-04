@@ -22,7 +22,9 @@
                         </a>
                     </div>
                     <div class="mt-6 text-gray-500">
-                        {{ $post->body }}
+                        // show first 100 characters of the post
+                        {{ substr($post->body, 0, 100) }} ...
+                       
                     </div>
                 </div>
             
