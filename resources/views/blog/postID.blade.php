@@ -60,7 +60,7 @@
                 <div class="text-sm font-bold text-gray-600">
                     {{ $comment->created_at->diffForHumans() }}
                 </div>
-                @if($comment->user_id == Auth::user()->id)
+                @if(Auth::user()->hasRole('admin') || $comment->user_id == Auth::user()->id)
                 <div class="flex flex-row-reverse space-x-3">
                     <!-- edit button edits on current webpage -->
                     <button data-attr-comment-edit="{{$comment->id}}" onclick="showCommentForm({{ $comment->id }})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mx-2">

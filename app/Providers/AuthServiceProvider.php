@@ -25,8 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('deleteComment', function ($user) {
-            return $user->hasRole('admin');
+        Gate::define('delete-comment', function (User $user, Comment $comment) {
+            return $user->hasRole('admin') || $user->id === $comment->user_id;
         });
         //
     }

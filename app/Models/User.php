@@ -25,6 +25,21 @@ public function comments()
     return $this->hasMany(Comment::class)->nullable();
 }   
 
+// create a many to many relationship between users and roles
+public function roles()
+{
+    return $this->belongsToMany(Role::class);
+}
+
+public function hasRole($role)
+{
+    if ($this->roles()->where('name', $role)->first()) {
+        return true;
+    }
+    
+    return false;
+}
+
 
 
     /**

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
 
 class UserTableSeeder extends Seeder
 {
@@ -22,7 +23,17 @@ class UserTableSeeder extends Seeder
         $a -> password = bcrypt('password');
         $a -> save();
 
+        $b = new User();    
+        $b -> name = 'user';    
+        $b -> email = 'user@example.com';
+        $b -> password = bcrypt('password');
+        $b -> save();
+
         User::factory()->count(10)->create();    
     
+        // $role = App\Models\Role::where('name', 'admin')->first();
+        // $a->roles()->sync($role);
+
+
     }
 }
